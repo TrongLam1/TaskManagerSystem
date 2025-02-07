@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -24,8 +25,8 @@ public class UserEntity {
     @Column
     private String title;
 
-    @Column
-    private String role;
+    @ManyToMany
+    private Set<RoleEntity> roles;
 
     @Column(unique = true)
     private String email;
@@ -34,7 +35,7 @@ public class UserEntity {
     private String password;
 
     @Column
-    private boolean isAdmin;
+    private String refreshToken;
 
     @ManyToMany(mappedBy = "team")
     private List<TaskEntity> tasks;
