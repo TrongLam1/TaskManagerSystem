@@ -39,7 +39,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Override
     public JwtAuthenticationResponse logIn(LogInRequest request) {
-        UserEntity user = userService.findUserByEmail(request.getEmail());
+        UserEntity user = userService.getUserByEmail(request.getEmail());
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new IncorrectPasswordException();
@@ -96,7 +96,12 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         StringJoiner stringJoiner = new StringJoiner(" ");
 
         if (!CollectionUtils.isEmpty(user.getRoles())) {
-            user.getRoles().forEach(stringJoiner::add);
+            user.getRoles().forEach(role -> {
+                stringJoiner.add("ROLE_" + role.getName());
+                if (!CollectionUtils.isEmpty(role.getPermissions())) {
+                    role.getPermissions().forEach(permission -> stringJoiner.add(permission.getName()));
+                }
+            });
         }
 
         return stringJoiner.toString();
