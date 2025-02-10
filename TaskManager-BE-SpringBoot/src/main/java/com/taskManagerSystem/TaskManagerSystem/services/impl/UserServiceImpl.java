@@ -19,14 +19,10 @@ public class UserServiceImpl implements IUserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User with email " + email + " not found."));
-    }
-
     @Override
     public UserEntity getUserByEmail(String email) {
-
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User with email: " + email));
     }
 
     @Override

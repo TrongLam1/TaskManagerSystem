@@ -1,11 +1,9 @@
 package com.taskManagerSystem.TaskManagerSystem.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

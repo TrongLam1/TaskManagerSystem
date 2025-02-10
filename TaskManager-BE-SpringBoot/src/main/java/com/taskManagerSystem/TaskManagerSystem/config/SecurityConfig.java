@@ -23,7 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS = {"/auth"};
+    private final String[] PUBLIC_ENDPOINTS = {"/auth/**"};
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -47,7 +47,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    private JwtDecoder jwtDecoder() {
+    public JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS512");
         return NimbusJwtDecoder
                 .withSecretKey(secretKeySpec)
@@ -56,7 +56,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    private JwtAuthenticationConverter jwtAuthenticationConverter() {
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         grantedAuthoritiesConverter.setAuthorityPrefix("");
 
