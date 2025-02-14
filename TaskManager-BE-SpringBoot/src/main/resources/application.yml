@@ -1,5 +1,10 @@
 server:
   port: 8080
+  servlet:
+    context-path: /api/v1
+
+jwt:
+  signerKey: +MNdgud6jTaWzQTdrzP94KVBp5CDRueECVPDgwMq9fufXQzhp4acQz88MIkAj8KC
 
 spring:
   datasource:
