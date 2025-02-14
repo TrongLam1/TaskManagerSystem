@@ -6,7 +6,8 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.taskManagerSystem.TaskManagerSystem.entities.UserEntity;
-import com.taskManagerSystem.TaskManagerSystem.exceptions.IncorrectPasswordException;
+import com.taskManagerSystem.TaskManagerSystem.exceptions.AppException;
+import com.taskManagerSystem.TaskManagerSystem.exceptions.ErrorCode;
 import com.taskManagerSystem.TaskManagerSystem.requests.LogInRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.JwtAuthenticationResponse;
 import com.taskManagerSystem.TaskManagerSystem.services.IAuthenticationService;
@@ -39,10 +40,10 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Override
     public JwtAuthenticationResponse logIn(LogInRequest request) {
-        UserEntity user = userService.getUserByEmail(request.getEmail());
+        UserEntity user = userService.findUserByEmail(request.getEmail());
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
-            throw new IncorrectPasswordException();
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
 
         String token = generateToken(user, 1);
         String refreshToken = generateToken(user, 7);
@@ -58,7 +59,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getName())
+                .subject(user.getEmail())
                 .issuer("task_manager")
                 .issueTime(new Date())
                 .expirationTime(new Date(
