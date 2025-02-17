@@ -49,7 +49,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         String refreshToken = generateToken(user, 7);
 
         return JwtAuthenticationResponse.builder()
-                .name(user.getName())
                 .token(token)
                 .refreshToken(refreshToken)
                 .build();
