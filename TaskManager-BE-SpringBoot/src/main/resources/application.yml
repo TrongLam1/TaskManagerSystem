@@ -16,3 +16,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+open:
+  api:
+    title: Task Manager System Services Document
+    version: v1.0.0
+    description: API Task Manager System
+    serverUrl: http://localhost:8080/
+    serverName: Server Test
