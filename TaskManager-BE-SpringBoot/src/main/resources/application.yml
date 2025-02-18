@@ -22,5 +22,10 @@ open:
     title: Task Manager System Services Document
     version: v1.0.0
     description: API Task Manager System
-    serverUrl: http://localhost:8080/
+    serverUrl: http://localhost:8080/api/v1
     serverName: Server Test
+
+springdoc:
+  swagger-ui:
+    operationsSorter: method   # Sắp xếp theo HTTP method (GET, POST, PUT, DELETE)
+    tagsSorter: alpha          # Sắp xếp các tag theo thứ tự bảng chữ cái

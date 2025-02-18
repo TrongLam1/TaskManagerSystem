@@ -4,6 +4,7 @@ import com.taskManagerSystem.TaskManagerSystem.requests.LogInRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.JwtAuthenticationResponse;
 import com.taskManagerSystem.TaskManagerSystem.responses.ResponseData;
 import com.taskManagerSystem.TaskManagerSystem.services.impl.AuthenticationServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Authentication Controller")
 public class AuthenticationController {
 
     private final AuthenticationServiceImpl authenticationService;
