@@ -1,6 +1,5 @@
 package com.taskManagerSystem.TaskManagerSystem.requests;
 
-import com.taskManagerSystem.TaskManagerSystem.dtos.ActivityDTO;
 import lombok.*;
 
 import java.util.List;
@@ -14,8 +13,6 @@ import java.util.Set;
 public class CreateTaskRequest {
 
     private String title;
-
-    private List<ActivityDTO> activities;
 
     private String subTask;
 

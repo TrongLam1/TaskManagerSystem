@@ -6,6 +6,8 @@ import com.taskManagerSystem.TaskManagerSystem.requests.UpdateTaskRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.PaginationResult;
 import com.taskManagerSystem.TaskManagerSystem.responses.ResponseData;
 import com.taskManagerSystem.TaskManagerSystem.services.impl.TaskServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Task Controller")
 public class TaskController {
 
     private final TaskServiceImpl taskService;
 
+    @Operation(summary = "Create new task.")
     @PostMapping("/create")
     public ResponseData<TaskDTO> createNewTask(@RequestBody CreateTaskRequest request) {
         try {
@@ -31,6 +35,7 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Duplicate any task.")
     @PostMapping("/duplicate")
     public ResponseData<TaskDTO> duplicateTask(@RequestBody Long taskId) {
         try {
@@ -43,6 +48,7 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Update info task.")
     @PutMapping("/update")
     public ResponseData<TaskDTO> updateTask(@RequestBody UpdateTaskRequest request) {
         try {
@@ -55,6 +61,7 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Remove task.", description = "Remove but not destroy, can restore.")
     @DeleteMapping("/remove/{taskId}")
     public ResponseData<String> removeTask(@PathVariable Long taskId) {
         try {
@@ -68,6 +75,7 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Restore task.", description = "Restore task is removed.")
     @DeleteMapping("/restore/{taskId}")
     public ResponseData<String> restoreTask(@PathVariable Long taskId) {
         try {
@@ -81,6 +89,7 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Destroy task.", description = "Can not restore.")
     @DeleteMapping("/delete/{taskId}")
     public ResponseData<String> deleteTask(@PathVariable Long taskId) {
         try {
@@ -94,6 +103,7 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Get task.")
     @GetMapping("/get/{taskId}")
     public ResponseData<TaskDTO> getTask(@PathVariable Long taskId) {
         try {
@@ -106,6 +116,7 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Get list tasks.", description = "Get list tasks is available or removed.")
     @GetMapping("/get-all")
     public ResponseData<PaginationResult<TaskDTO>> getTasksByStatus(
             @RequestParam("isRemoved") boolean isRemoved,

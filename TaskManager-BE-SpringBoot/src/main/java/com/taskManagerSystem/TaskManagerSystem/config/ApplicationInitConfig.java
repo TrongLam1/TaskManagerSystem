@@ -28,15 +28,22 @@ public class ApplicationInitConfig {
                         .name("ADMIN")
                         .build();
 
+                RoleEntity roleMember = RoleEntity.builder()
+                        .name("MEMBER")
+                        .build();
+
                 roleAdmin = roleRepository.save(roleAdmin);
+                roleRepository.save(roleMember);
 
                 HashSet<RoleEntity> roles = new HashSet<>();
                 roles.add(roleAdmin);
 
                 UserEntity admin = UserEntity.builder()
                         .email("admin@gmail.com")
+                        .name("Admin")
                         .password(passwordEncoder.encode("123456"))
                         .roles(roles)
+                        .isActive(true)
                         .build();
 
                 userRepository.save(admin);

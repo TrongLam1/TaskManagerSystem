@@ -6,6 +6,7 @@ import com.taskManagerSystem.TaskManagerSystem.requests.UpdateUserRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.PaginationResult;
 import com.taskManagerSystem.TaskManagerSystem.responses.ResponseData;
 import com.taskManagerSystem.TaskManagerSystem.services.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.Set;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "User Controller")
 public class UserController {
 
     private final UserServiceImpl userService;

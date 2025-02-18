@@ -3,6 +3,8 @@ package com.taskManagerSystem.TaskManagerSystem.services.impl;
 import com.taskManagerSystem.TaskManagerSystem.dtos.TaskDTO;
 import com.taskManagerSystem.TaskManagerSystem.entities.TaskEntity;
 import com.taskManagerSystem.TaskManagerSystem.entities.UserEntity;
+import com.taskManagerSystem.TaskManagerSystem.enums.TaskPriority;
+import com.taskManagerSystem.TaskManagerSystem.enums.TaskStage;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.AppException;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.ErrorCode;
 import com.taskManagerSystem.TaskManagerSystem.repositories.TaskRepository;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +55,9 @@ public class TaskServiceImpl implements ITaskService {
                 .title(request.getTitle())
                 .subTask(request.getSubTask())
                 .team(team)
+                .date(LocalDateTime.now())
+                .taskPriority(TaskPriority.NORMAL)
+                .stage(TaskStage.TODO)
                 .build();
 
         task = taskRepository.save(task);
@@ -90,12 +96,20 @@ public class TaskServiceImpl implements ITaskService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public TaskDTO duplicateTask(Long taskId) {
         TaskEntity task = findTaskById(taskId);
+
+        List<String> assets = new ArrayList<>();
+        assets.addAll(task.getAssets());
+
+        List<UserEntity> team = new ArrayList<>();
+        team.addAll(task.getTeam());
+
         TaskEntity newTask = TaskEntity.builder()
                 .title(task.getTitle())
+                .date(LocalDateTime.now())
                 .subTask(task.getSubTask())
-                .assets(task.getAssets())
-                .team(task.getTeam())
-                .activities(task.getActivities())
+                .assets(assets)
+                .team(team)
+                //.activities(task.getActivities())
                 .taskPriority(task.getTaskPriority())
                 .stage(task.getStage())
                 .build();
