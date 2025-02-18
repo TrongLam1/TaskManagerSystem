@@ -21,6 +21,4 @@ public class UserDTO {
     private Set<RoleEntity> roles;
 
     private String email;
-
-    private boolean isActive;
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class TaskEntity {
 
     @Id
@@ -35,15 +37,15 @@ public class TaskEntity {
     private String title;
 
     @Column
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime date;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private TaskPriority taskPriority = TaskPriority.NORMAL;
+    private TaskPriority taskPriority;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private TaskStage stage = TaskStage.TODO;
+    private TaskStage stage;
 
     @Column
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -53,6 +55,7 @@ public class TaskEntity {
     private String subTask;
 
     @ElementCollection
+    @OrderColumn
     private List<String> assets;
 
     @ManyToMany
