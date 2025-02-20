@@ -1,8 +1,8 @@
 package com.taskManagerSystem.TaskManagerSystem.controllers;
 
 import com.taskManagerSystem.TaskManagerSystem.dtos.UserDTO;
-import com.taskManagerSystem.TaskManagerSystem.requests.CreateUserRequest;
-import com.taskManagerSystem.TaskManagerSystem.requests.UpdateUserRequest;
+import com.taskManagerSystem.TaskManagerSystem.requests.user.CreateUserRequest;
+import com.taskManagerSystem.TaskManagerSystem.requests.user.UpdateUserRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.PaginationResult;
 import com.taskManagerSystem.TaskManagerSystem.responses.ResponseData;
 import com.taskManagerSystem.TaskManagerSystem.services.impl.UserServiceImpl;
@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -25,6 +26,7 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<UserDTO> createUser(@RequestBody CreateUserRequest request) {
         try {
             log.info("Request: Create new user");
@@ -79,6 +81,7 @@ public class UserController {
     }
 
     @DeleteMapping("/remove")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseData<String> removeUsers(@RequestBody Set<String> emails) {
         try {
             log.info("Request: Remove users");

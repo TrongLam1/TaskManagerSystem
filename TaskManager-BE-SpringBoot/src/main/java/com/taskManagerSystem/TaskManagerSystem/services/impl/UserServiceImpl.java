@@ -5,8 +5,8 @@ import com.taskManagerSystem.TaskManagerSystem.entities.UserEntity;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.AppException;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.ErrorCode;
 import com.taskManagerSystem.TaskManagerSystem.repositories.UserRepository;
-import com.taskManagerSystem.TaskManagerSystem.requests.CreateUserRequest;
-import com.taskManagerSystem.TaskManagerSystem.requests.UpdateUserRequest;
+import com.taskManagerSystem.TaskManagerSystem.requests.user.CreateUserRequest;
+import com.taskManagerSystem.TaskManagerSystem.requests.user.UpdateUserRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.PaginationResult;
 import com.taskManagerSystem.TaskManagerSystem.services.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -116,7 +115,6 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void removeUsers(Set<String> emails) {
         for (String email : emails) {
             UserEntity user = findUserByEmail(email);

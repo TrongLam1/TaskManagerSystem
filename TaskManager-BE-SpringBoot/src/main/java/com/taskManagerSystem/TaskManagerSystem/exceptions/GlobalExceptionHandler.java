@@ -2,6 +2,7 @@ package com.taskManagerSystem.TaskManagerSystem.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,6 +21,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AppException.class)
     public ErrorResponse handlingAppException(AppException exception) {
         ErrorCode errorCode = exception.getErrorCode();
+        ErrorResponse errorResponse = new ErrorResponse();
+
+        errorResponse.setStatus(errorCode.getCode());
+        errorResponse.setMessage(errorCode.getMessage());
+
+        return errorResponse;
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ErrorResponse handlingAccessDeniedException(AccessDeniedException exception) {
+        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
         ErrorResponse errorResponse = new ErrorResponse();
 
         errorResponse.setStatus(errorCode.getCode());
