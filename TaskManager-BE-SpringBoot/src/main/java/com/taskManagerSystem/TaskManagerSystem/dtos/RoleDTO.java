@@ -1,17 +1,19 @@
-package com.taskManagerSystem.TaskManagerSystem.requests;
+package com.taskManagerSystem.TaskManagerSystem.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PermissionRequest {
+public class RoleDTO {
 
     private String name;
 
-    private String description;
+    private Set<PermissionDTO> permissions;
 }
