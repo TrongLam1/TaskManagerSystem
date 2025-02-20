@@ -1,4 +1,4 @@
-package com.taskManagerSystem.TaskManagerSystem.requests;
+package com.taskManagerSystem.TaskManagerSystem.requests.task;
 
 import com.taskManagerSystem.TaskManagerSystem.dtos.ActivityDTO;
 import com.taskManagerSystem.TaskManagerSystem.enums.TaskPriority;

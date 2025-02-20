@@ -1,8 +1,8 @@
 package com.taskManagerSystem.TaskManagerSystem.services;
 
 import com.taskManagerSystem.TaskManagerSystem.dtos.UserDTO;
-import com.taskManagerSystem.TaskManagerSystem.requests.CreateUserRequest;
-import com.taskManagerSystem.TaskManagerSystem.requests.UpdateUserRequest;
+import com.taskManagerSystem.TaskManagerSystem.requests.user.CreateUserRequest;
+import com.taskManagerSystem.TaskManagerSystem.requests.user.UpdateUserRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.PaginationResult;
 
 import java.util.Set;

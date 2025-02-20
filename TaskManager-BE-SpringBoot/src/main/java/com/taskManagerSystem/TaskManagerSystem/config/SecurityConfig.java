@@ -1,9 +1,11 @@
 package com.taskManagerSystem.TaskManagerSystem.config;
 
+import com.taskManagerSystem.TaskManagerSystem.exceptions.CustomAccessDeniedHandler;
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,14 +25,16 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS = {
             "/auth/**",
-            "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/swagger-ui.html"
+            "/swagger-ui/**"
     };
+
+    private final String[] AUTHORIZE_ENDPOINTS = {"/roles/**", "/permissions/**"};
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -38,10 +42,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                                .requestMatchers(AUTHORIZE_ENDPOINTS).hasAnyAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated());
 
         http.oauth2ResourceServer(oauth2 ->
@@ -50,6 +54,9 @@ public class SecurityConfig {
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
+
+        http.exceptionHandling(exception ->
+                exception.accessDeniedHandler(new CustomAccessDeniedHandler()));
 
         return http.build();
     }

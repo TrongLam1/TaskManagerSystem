@@ -1,4 +1,4 @@
-package com.taskManagerSystem.TaskManagerSystem.requests;
+package com.taskManagerSystem.TaskManagerSystem.requests.user;
 
 import com.taskManagerSystem.TaskManagerSystem.entities.RoleEntity;
 import lombok.*;

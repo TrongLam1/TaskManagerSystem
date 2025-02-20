@@ -1,4 +1,4 @@
-package com.taskManagerSystem.TaskManagerSystem.requests;
+package com.taskManagerSystem.TaskManagerSystem.requests.task;
 
 import lombok.*;
 
