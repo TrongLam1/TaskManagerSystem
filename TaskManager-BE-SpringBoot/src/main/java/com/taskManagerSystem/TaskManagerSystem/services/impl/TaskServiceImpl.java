@@ -21,7 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -36,7 +35,7 @@ public class TaskServiceImpl implements ITaskService {
 
     private final ModelMapper mapper;
     
-    private TaskEntity findTaskById(Long id) {
+    public TaskEntity findTaskById(Long id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.TASK_NOT_EXISTED));
     }
@@ -53,9 +52,8 @@ public class TaskServiceImpl implements ITaskService {
 
         TaskEntity task = TaskEntity.builder()
                 .title(request.getTitle())
-                .subTask(request.getSubTask())
                 .team(team)
-                .date(LocalDateTime.now())
+                .deadline(request.getDeadline())
                 .taskPriority(TaskPriority.NORMAL)
                 .stage(TaskStage.TODO)
                 .build();
@@ -68,8 +66,8 @@ public class TaskServiceImpl implements ITaskService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public TaskDTO updateTask(UpdateTaskRequest request) {
         TaskEntity task = findTaskById(request.getTaskId());
-        task.setTitle(request.getTitle());
-        task.setSubTask(request.getSubTask());
+        task.setStage(request.getStage());
+        task.setTaskPriority(request.getTaskPriority());
 
         task = taskRepository.save(task);
         return mapper.map(task, TaskDTO.class);
@@ -105,11 +103,9 @@ public class TaskServiceImpl implements ITaskService {
 
         TaskEntity newTask = TaskEntity.builder()
                 .title(task.getTitle())
-                .date(LocalDateTime.now())
-                .subTask(task.getSubTask())
+                .deadline(task.getDeadline())
                 .assets(assets)
                 .team(team)
-                //.activities(task.getActivities())
                 .taskPriority(task.getTaskPriority())
                 .stage(task.getStage())
                 .build();

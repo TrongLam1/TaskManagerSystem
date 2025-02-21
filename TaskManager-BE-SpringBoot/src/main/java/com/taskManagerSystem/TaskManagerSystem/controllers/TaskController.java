@@ -53,7 +53,7 @@ public class TaskController {
     public ResponseData<TaskDTO> updateTask(@RequestBody UpdateTaskRequest request) {
         try {
             log.info("Request: Update task {}", request.getTaskId());
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Update task",
+            return new ResponseData<>(HttpStatus.OK.value(), "Update task",
                     taskService.updateTask(request));
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -67,7 +67,7 @@ public class TaskController {
         try {
             log.info("Request: Remove task {}", taskId);
             taskService.removeTask(taskId);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Remove task",
+            return new ResponseData<>(HttpStatus.OK.value(), "Remove task",
                     "Remove task successfully.");
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -81,7 +81,7 @@ public class TaskController {
         try {
             log.info("Request: Restore task {}", taskId);
             taskService.restoreTask(taskId);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Restore task",
+            return new ResponseData<>(HttpStatus.OK.value(), "Restore task",
                     "Restore task successfully.");
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -95,7 +95,7 @@ public class TaskController {
         try {
             log.info("Request: Delete task {}", taskId);
             taskService.deleteTask(taskId);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Delete task",
+            return new ResponseData<>(HttpStatus.OK.value(), "Delete task",
                     "Delete task successfully.");
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -108,7 +108,7 @@ public class TaskController {
     public ResponseData<TaskDTO> getTask(@PathVariable Long taskId) {
         try {
             log.info("Request: Get task {}", taskId);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Get task",
+            return new ResponseData<>(HttpStatus.OK.value(), "Get task",
                     taskService.getTask(taskId));
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -126,7 +126,7 @@ public class TaskController {
             @RequestParam("sortDirection") String sortDirection) {
         try {
             log.info("Request: Get tasks by status {}", isRemoved);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Get tasks",
+            return new ResponseData<>(HttpStatus.OK.value(), "Get tasks",
                     taskService.getTasksByStatus(isRemoved, pageNo, pageSize, sortBy, sortDirection));
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
