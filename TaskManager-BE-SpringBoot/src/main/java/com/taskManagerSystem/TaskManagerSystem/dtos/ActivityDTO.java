@@ -14,9 +14,11 @@ public class ActivityDTO {
 
     private Long activityId;
 
-    private TaskActivity type;
+    private TaskActivity activity;
 
-    private LocalDateTime date;
+    private LocalDateTime createdAt;
+
+    private String content;
 
     private UserDTO by;
 }
