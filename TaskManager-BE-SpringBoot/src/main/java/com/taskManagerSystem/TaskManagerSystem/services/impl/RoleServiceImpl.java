@@ -10,7 +10,6 @@ import com.taskManagerSystem.TaskManagerSystem.requests.authorization.RoleReques
 import com.taskManagerSystem.TaskManagerSystem.responses.PaginationResult;
 import com.taskManagerSystem.TaskManagerSystem.services.IRoleService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,6 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class RoleServiceImpl implements IRoleService {
 
     private final RoleRepository roleRepository;

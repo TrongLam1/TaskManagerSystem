@@ -39,7 +39,7 @@ public class PermissionController {
     public ResponseData<PermissionDTO> updatePermission(@RequestBody PermissionRequest request) {
         try {
             log.info("Request: Update permission {}", request.getName());
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Update permission",
+            return new ResponseData<>(HttpStatus.OK.value(), "Update permission",
                     permissionService.updatePermission(request));
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -52,7 +52,7 @@ public class PermissionController {
     public ResponseData<PaginationResult<PermissionDTO>> getPermissions() {
         try {
             log.info("Request: Get all permissions.");
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Get all permissions",
+            return new ResponseData<>(HttpStatus.OK.value(), "Get all permissions",
                     permissionService.getPermissions());
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -66,7 +66,7 @@ public class PermissionController {
         try {
             log.info("Request: Delete permission {}", permissionName);
             permissionService.deletePermission(permissionName);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Delete permission successfully.");
+            return new ResponseData<>(HttpStatus.OK.value(), "Delete permission successfully.");
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
             return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
