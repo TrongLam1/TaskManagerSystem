@@ -26,7 +26,7 @@ public class ActivityController {
     @PostMapping("/create")
     public ResponseData<ActivityDTO> createActivity(@RequestBody ActivityRequest request) {
         try {
-            log.info("Request: Create new activity {} {}", request.getActivity(), request.getEmail());
+            log.info("Request: Create new activity {}", request.getActivity());
             return new ResponseData<>(HttpStatus.CREATED.value(), "Create new activity",
                     activityService.createActivity(request));
         } catch (Exception e) {

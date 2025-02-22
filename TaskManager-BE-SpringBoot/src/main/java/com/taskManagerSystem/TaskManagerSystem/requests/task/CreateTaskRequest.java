@@ -1,6 +1,5 @@
 package com.taskManagerSystem.TaskManagerSystem.requests.task;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,7 +15,6 @@ public class CreateTaskRequest {
 
     private String title;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate deadline;
 
     private List<String> assets;
