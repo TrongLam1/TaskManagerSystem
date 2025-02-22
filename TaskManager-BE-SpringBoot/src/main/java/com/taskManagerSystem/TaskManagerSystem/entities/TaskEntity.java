@@ -39,7 +39,6 @@ public class TaskEntity {
     private String title;
 
     @Column(nullable = false)
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate deadline;
 
     @Column

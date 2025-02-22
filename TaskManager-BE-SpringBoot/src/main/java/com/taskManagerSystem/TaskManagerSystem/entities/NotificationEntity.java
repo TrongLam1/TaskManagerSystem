@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class NotificationEntity {
 
     @Id
@@ -35,7 +37,7 @@ public class NotificationEntity {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private NotifyType type = NotifyType.ALERT;
+    private NotifyType type;
 
     @ManyToOne
     @JoinColumn(name = "task_id")
