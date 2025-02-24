@@ -39,7 +39,7 @@ public class RoleController {
     public ResponseData<RoleDTO> updateRole(@RequestBody RoleRequest request) {
         try {
             log.info("Request: Update role {}", request.getName());
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Update role",
+            return new ResponseData<>(HttpStatus.OK.value(), "Update role",
                     roleService.updateRole(request));
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -52,7 +52,7 @@ public class RoleController {
     public ResponseData<PaginationResult<RoleDTO>> getRoles() {
         try {
             log.info("Request: Get all roles.");
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Get all roles",
+            return new ResponseData<>(HttpStatus.OK.value(), "Get all roles",
                     roleService.getRoles());
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -66,7 +66,7 @@ public class RoleController {
         try {
             log.info("Request: Delete role {}", roleName);
             roleService.deleteRole(roleName);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Delete role successfully.");
+            return new ResponseData<>(HttpStatus.OK.value(), "Delete role successfully.");
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
             return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());

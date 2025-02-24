@@ -4,6 +4,7 @@ import com.taskManagerSystem.TaskManagerSystem.enums.TaskPriority;
 import com.taskManagerSystem.TaskManagerSystem.enums.TaskStage;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,11 +19,9 @@ public class TaskDTO {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
-
     private String title;
 
-    private LocalDateTime date;
+    private LocalDate deadline;
 
     private TaskPriority taskPriority;
 
@@ -30,11 +29,9 @@ public class TaskDTO {
 
     private List<ActivityDTO> activities;
 
-    private String subTask;
+    private List<SubTaskDTO> subTask;
 
     private List<String> assets;
 
     private List<UserDTO> team;
-
-    private boolean isRemoved;
 }

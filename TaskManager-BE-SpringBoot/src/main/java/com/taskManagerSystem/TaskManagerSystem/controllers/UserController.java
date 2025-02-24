@@ -42,7 +42,7 @@ public class UserController {
     public ResponseData<UserDTO> updateUser(@RequestBody UpdateUserRequest request) {
         try {
             log.info("Request: Update user");
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Update user",
+            return new ResponseData<>(HttpStatus.OK.value(), "Update user",
                     userService.updateUser(request));
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());
@@ -54,7 +54,7 @@ public class UserController {
     public ResponseData<UserDTO> getProfile(Principal principal) {
         try {
             log.info("Request: Get profile");
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Get profile",
+            return new ResponseData<>(HttpStatus.OK.value(), "Get profile",
                     userService.getProfile());
         } catch (Exception e) {
             log.error("errorMessage={}", e.getMessage(), e.getCause());

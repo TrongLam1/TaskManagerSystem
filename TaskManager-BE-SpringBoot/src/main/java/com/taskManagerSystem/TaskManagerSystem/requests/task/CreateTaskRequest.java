@@ -2,6 +2,7 @@ package com.taskManagerSystem.TaskManagerSystem.requests.task;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class CreateTaskRequest {
 
     private String title;
 
-    private String subTask;
+    private LocalDate deadline;
 
     private List<String> assets;
 

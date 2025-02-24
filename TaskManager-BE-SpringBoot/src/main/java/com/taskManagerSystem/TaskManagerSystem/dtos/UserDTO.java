@@ -1,9 +1,6 @@
 package com.taskManagerSystem.TaskManagerSystem.dtos;
 
-import com.taskManagerSystem.TaskManagerSystem.entities.RoleEntity;
 import lombok.*;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -17,8 +14,6 @@ public class UserDTO {
     private String name;
 
     private String title;
-
-    private Set<RoleEntity> roles;
 
     private String email;
 }

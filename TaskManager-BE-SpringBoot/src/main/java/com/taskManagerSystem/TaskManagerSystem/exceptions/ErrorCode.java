@@ -21,6 +21,7 @@ public enum ErrorCode {
     ROLE_NOT_EXISTED(1011, "Role not existed", HttpStatus.NOT_FOUND),
     PERMISSION_EXISTED(1012, "Permission existed", HttpStatus.BAD_REQUEST),
     PERMISSION_NOT_EXISTED(1013, "Permission not existed", HttpStatus.NOT_FOUND),
+    SUB_TASK_NOT_EXISTED(1014, "Sub task not existed", HttpStatus.NOT_FOUND),
     ;
 
     private final int code;

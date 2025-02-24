@@ -8,7 +8,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,11 +35,11 @@ public class TaskEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
-    private LocalDateTime date;
+    @Column(nullable = false)
+    private LocalDate deadline;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -48,11 +50,11 @@ public class TaskEntity {
     private TaskStage stage;
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ActivityEntity> activities;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActivityEntity> activities = new ArrayList<>();
 
-    @Column
-    private String subTask;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubTaskEntity> subTasks = new ArrayList<>();
 
     @ElementCollection
     @OrderColumn
