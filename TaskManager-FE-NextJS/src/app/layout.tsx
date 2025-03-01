@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
+import Sidebar from "@/components/sidebar/sidebar";
 
 const nunitoSans = Nunito_Sans({
   weight: "400",
@@ -23,10 +24,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunitoSans.className} antialiased`}>
         <div className="flex h-full w-full bg-[#f3f4f6] text-black">
-          <div className="sidebar w-1/5 p-5">sidebar</div>
-          <div className="main w-full pr-1">
+          <div className="sticky top-0 hidden h-screen w-1/5 bg-white md:block">
+            <Sidebar />
+          </div>
+          <div className="main flex-1">
             <Navbar />
-            {children}
+            <div className="p-4 2xl:px-10">{children}</div>
           </div>
         </div>
       </body>
