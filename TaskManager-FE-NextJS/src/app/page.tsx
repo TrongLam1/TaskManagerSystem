@@ -1,10 +1,11 @@
-import Navbar from "@/components/navbar/navbar";
-import Image from "next/image";
+import { redirect } from "next/navigation";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
+
+const auth = true;
 
 export default function Home() {
   const ICONS = {
@@ -13,12 +14,7 @@ export default function Home() {
     low: <MdKeyboardArrowDown />,
   };
 
-  return (
-    <div className="flex h-screen w-full bg-[#f3f4f6] text-black">
-      <div className="sidebar w-1/5 p-5">sidebar</div>
-      <div className="main w-full">
-        <Navbar />
-      </div>
-    </div>
-  );
+  if (auth) redirect("/dashboard");
+
+  return <></>;
 }
