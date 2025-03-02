@@ -20,7 +20,7 @@ const stats = [
   },
   {
     _id: "2",
-    label: "COMPLTED TASK",
+    label: "COMPLETED TASK",
     total: 0,
     icon: <MdAdminPanelSettings />,
     bg: "bg-[#0f766e]",

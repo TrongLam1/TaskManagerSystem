@@ -1,60 +1,68 @@
 "use client";
 
-import clsx from "clsx";
-import moment from "moment";
+import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import UserModal from "../modal/user/userModal";
+import User from "./user";
+import ConfirmModal from "../modal/dialog/confirmModal";
 
-export default function UserTable(props: unknown) {
-  const { users } = props;
+export default function UserTable() {
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [openUserModal, setOpenUserModal] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
-  const TableHeader = () => (
-    <thead className="border-b border-gray-300">
-      <tr className="text-left text-black">
-        <th className="py-2">Full Name</th>
-        <th className="py-2">Status</th>
-        <th className="py-2">Created At</th>
-      </tr>
-    </thead>
-  );
+  const closeModal = () => {
+    setOpenConfirm(false);
+    setOpenUserModal(false);
+  };
 
-  const TableRow = ({ user }) => (
-    <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-400/10">
-      <td className="py-2">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-700 text-sm text-white">
-            <span className="text-center">{getInitials(user?.name)}</span>
-          </div>
+  const handleOpenConfirmModal = (userId: number) => {
+    setOpenConfirm(true);
+    setSelectedUser(userId);
+  };
 
-          <div>
-            <p> {user.name}</p>
-            <span className="text-xs text-black">{user?.role}</span>
-          </div>
-        </div>
-      </td>
-
-      <td>
-        <p
-          className={clsx(
-            "w-fit rounded-full px-3 py-1 text-sm",
-            user?.isActive ? "bg-blue-200" : "bg-yellow-100",
-          )}
-        >
-          {user?.isActive ? "Active" : "Disabled"}
-        </p>
-      </td>
-      <td className="py-2 text-sm">{moment(user?.createdAt).fromNow()}</td>
-    </tr>
-  );
+  const handleDeleteUser = () => {
+    alert("Delete " + selectedUser);
+    closeModal();
+  };
 
   return (
-    <div className="h-fit w-full rounded bg-white px-2 py-4 shadow-md md:w-1/3 md:px-6">
-      <table className="mb-5 w-full">
-        <TableHeader />
-        <tbody>
-          {users?.map((user, index) => (
-            <TableRow key={index + user?._id} user={user} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="mb-6 w-full px-0 md:px-1">
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold capitalize">Team Members</h2>
+          <button
+            type="button"
+            className="flex items-center gap-1 rounded-md bg-blue-600 px-3 py-2 text-white outline-none 2xl:py-2.5"
+            onClick={() => setOpenUserModal(true)}
+          >
+            <FaPlus />
+            <span>Add New User</span>
+          </button>
+        </div>
+        <div className="rounded bg-white px-2 py-4 shadow-md md:px-4">
+          <table className="mb-5 w-full">
+            <thead className="border-b border-gray-300">
+              <tr className="text-left text-black">
+                <th className="py-2 text-center">Full Name</th>
+                <th className="py-2 text-center">Title</th>
+                <th className="py-2 text-center">Email</th>
+                <th className="py-2 text-center">Role</th>
+                <th className="py-2 text-center">Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <User deleteUser={() => handleOpenConfirmModal(1)} />
+              <User />
+              <User />
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {openUserModal && <UserModal setOpen={setOpenUserModal} />}
+      {openConfirm && (
+        <ConfirmModal confirm={handleDeleteUser} close={closeModal} />
+      )}
+    </>
   );
 }
