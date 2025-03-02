@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
 import {
   MdDashboard,
@@ -39,7 +40,7 @@ const linkData = [
   },
   {
     label: "Team",
-    link: "team",
+    link: "user/1",
     icon: <FaUsers />,
   },
   {
@@ -50,7 +51,8 @@ const linkData = [
 ];
 
 export default function Sidebar() {
-  const path = location.pathname.split("/")[1];
+  const location = usePathname();
+  const path = location.split("/")[1];
 
   //   const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
 
