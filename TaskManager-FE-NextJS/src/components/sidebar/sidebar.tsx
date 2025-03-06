@@ -15,37 +15,37 @@ import {
 const linkData = [
   {
     label: "Dashboard",
-    link: "dashboard",
+    link: "/dashboard",
     icon: <MdDashboard />,
   },
   {
     label: "Tasks",
-    link: "tasks",
+    link: "/task/1",
     icon: <FaTasks />,
   },
   {
     label: "Completed",
-    link: "completed/completed",
+    link: "/completed/1",
     icon: <MdTaskAlt />,
   },
   {
     label: "In Progress",
-    link: "in-progress/in progress",
+    link: "/in-progress/1",
     icon: <MdOutlinePendingActions />,
   },
   {
     label: "To Do",
-    link: "todo/todo",
+    link: "/to-do/1",
     icon: <MdOutlinePendingActions />,
   },
   {
     label: "Team",
-    link: "user/1",
+    link: "/user/1",
     icon: <FaUsers />,
   },
   {
     label: "Trash",
-    link: "trashed",
+    link: "/trashed",
     icon: <FaTrashAlt />,
   },
 ];
@@ -56,8 +56,6 @@ export default function Sidebar() {
 
   //   const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
 
-  const sidebarLinks = linkData;
-
   const closeSidebar = () => {};
 
   const NavLink = ({ el }) => {
@@ -66,10 +64,10 @@ export default function Sidebar() {
         href={el.link}
         onClick={closeSidebar}
         className={clsx(
-          "flex w-full items-center gap-2 rounded-full px-3 py-2 text-base text-gray-800 hover:bg-[#2564ed2d] lg:w-3/4",
+          "flex w-full items-center gap-2 rounded-full px-3 py-2 text-base text-gray-800 lg:w-3/4",
           path === el?.link?.split("/")[0]
             ? "bg-blue-700 text-neutral-100"
-            : "",
+            : "hover:bg-[#2564ed2d]",
         )}
       >
         {el.icon}
@@ -88,7 +86,7 @@ export default function Sidebar() {
       </h1>
 
       <div className="flex flex-1 flex-col gap-y-5 py-8">
-        {sidebarLinks.map((link) => (
+        {linkData.map((link) => (
           <NavLink el={link} key={link.label} />
         ))}
       </div>

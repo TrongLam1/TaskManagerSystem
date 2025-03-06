@@ -1,10 +1,10 @@
 import Card from "@/components/card/card";
-import { LuClipboardList } from "react-icons/lu";
+import Chart from "@/components/chart/chart";
+import TaskTableDashboard from "@/components/task/taskTableDashboard";
 import { FaNewspaper } from "react-icons/fa";
 import { FaArrowsToDot } from "react-icons/fa6";
+import { LuClipboardList } from "react-icons/lu";
 import { MdAdminPanelSettings } from "react-icons/md";
-import Chart from "@/components/chart/chart";
-import TaskTable from "@/components/task/taskTable";
 
 export const metadata = {
   title: "Dashboard",
@@ -56,7 +56,7 @@ export default function Dashboard() {
         <Chart />
       </div>
       <div className="flex w-full flex-col gap-4 py-8 md:flex-row 2xl:gap-10">
-        <TaskTable />
+        <TaskTableDashboard />
       </div>
     </div>
   );
