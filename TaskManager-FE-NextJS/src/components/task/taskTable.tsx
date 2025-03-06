@@ -1,84 +1,88 @@
 "use client";
 
-import clsx from "clsx";
-import moment from "moment";
-import {
-  MdKeyboardArrowDown,
-  MdKeyboardArrowUp,
-  MdKeyboardDoubleArrowUp,
-} from "react-icons/md";
+import { useState } from "react";
+import { FaList, FaPlus } from "react-icons/fa";
+import { RxDashboard } from "react-icons/rx";
+import TabView from "./tabView";
+import TaskBoardView from "./board/taskBoardView";
+import TaskListView from "./list/taskListView";
+import TaskModal from "../modal/task/taskModal";
+import { usePathname } from "next/navigation";
 
-const ICONS = {
-  high: <MdKeyboardDoubleArrowUp />,
-  medium: <MdKeyboardArrowUp />,
-  low: <MdKeyboardArrowDown />,
-};
+const tabs = [
+  {
+    number: 0,
+    name: "Board View",
+    icon: <RxDashboard />,
+    view: <TaskBoardView key={`tab-${0}`} />,
+  },
+  {
+    number: 1,
+    name: "List View",
+    icon: <FaList />,
+    view: <TaskListView key={`tab-${1}`} />,
+  },
+];
+
+const titles = new Map([
+  ["task", "Task"],
+  ["to-do", "To Do"],
+  ["in-progress", "In Progress"],
+  ["completed", "Completed"],
+]);
 
 export default function TaskTable(props: unknown) {
-  const TableHeader = () => {
-    return (
-      <thead className="border-b border-gray-300">
-        <tr className="text-left text-black">
-          <th className="py-2">Task Title</th>
-          <th className="py-2">Priority</th>
-          <th className="py-2">Team</th>
-          <th className="hidden py-2 md:block">Created At</th>
-        </tr>
-      </thead>
-    );
-  };
+  const pathname = usePathname();
+  const [openModalTask, setOpenModalTask] = useState(false);
+  const [selectedView, setSelectedView] = useState(0);
 
-  const TableRow = (task) => {
-    return (
-      <tr className="border-b border-gray-300 text-gray-600 hover:bg-gray-300/10">
-        <td className="py-2">
-          <div className="flex items-center gap-2">
-            <div
-              className={clsx("h-4 w-4 rounded-full", TASK_TYPE[task.stage])}
-            />
+  const arrayPath = pathname.split("/");
 
-            <p className="text-base text-black">{task.title}</p>
-          </div>
-        </td>
-
-        <td className="py-2">
-          <div className="flex items-center gap-1">
-            <span className={clsx("text-lg", PRIOTITYSTYELS[task.priority])}>
-              {ICONS[task.priority]}
-            </span>
-            <span className="capitalize">{task.priority}</span>
-          </div>
-        </td>
-
-        <td className="py-2">
-          <div className="flex">
-            {task.team.map((m, index) => (
-              <div
-                key={index}
-                className={clsx(
-                  "-mr-1 flex h-7 w-7 items-center justify-center rounded-full text-sm text-white",
-                  BGS[index % BGS.length],
-                )}
-              >
-                <UserInfo user={m} />
-              </div>
-            ))}
-          </div>
-        </td>
-        <td className="hidden py-2 md:block">
-          <span className="text-base text-gray-600">
-            {moment(task?.date).fromNow()}
-          </span>
-        </td>
-      </tr>
-    );
+  const closeModal = () => {
+    setOpenModalTask(false);
   };
 
   return (
-    <div className="w-full rounded bg-white px-2 pb-4 pt-4 shadow-md md:w-2/3 md:px-4">
-      <table className="w-full">
-        <TableHeader />
-      </table>
-    </div>
+    <>
+      <div className="w-full">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold capitalize">
+            {titles.get(arrayPath[1])}
+          </h2>
+          {arrayPath.includes("task") && (
+            <button
+              type="button"
+              className="flex items-center gap-1 rounded-md bg-blue-600 px-3 py-2 text-white outline-none 2xl:py-2.5"
+              onClick={() => setOpenModalTask(true)}
+            >
+              <FaPlus />
+              <span>Create Task</span>
+            </button>
+          )}
+        </div>
+        <div className="w-full px-1 sm:px-0">
+          <div className="flex space-x-6 rounded-xl p-1">
+            {tabs.map((tab: unknown, index: number) => {
+              return (
+                <TabView
+                  tab={tab}
+                  key={`tab-${index}`}
+                  selected={selectedView}
+                  setSelected={setSelectedView}
+                />
+              );
+            })}
+          </div>
+          <div className="mt-2 w-full">
+            {tabs.map((tab: unknown) => {
+              if (selectedView === tab.number) {
+                return tab.view;
+              }
+            })}
+          </div>
+        </div>
+      </div>
+      {openModalTask && <TaskModal close={closeModal} />}
+    </>
   );
 }
