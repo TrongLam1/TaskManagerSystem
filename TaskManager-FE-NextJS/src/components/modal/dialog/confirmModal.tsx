@@ -1,0 +1,45 @@
+"use client";
+
+import { IoMdClose } from "react-icons/io";
+import { RiErrorWarningLine } from "react-icons/ri";
+
+export default function ConfirmModal(props: unknown) {
+  const { confirm, close } = props;
+  return (
+    <div className="fixed left-0 right-0 top-0 z-50 flex h-full max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-70 md:inset-0">
+      <div className="relative max-h-full w-full max-w-md p-4">
+        <div className="relative rounded-lg bg-white shadow-sm dark:bg-gray-700">
+          <button
+            type="button"
+            className="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="popup-modal"
+            onClick={close}
+          >
+            <IoMdClose className="text-xl" />
+            <span className="sr-only">Close modal</span>
+          </button>
+          <div className="p-4 text-center md:p-5">
+            <RiErrorWarningLine className="mx-auto mb-4 h-12 w-12 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete this product?
+            </h3>
+            <button
+              type="button"
+              className="inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800"
+              onClick={confirm}
+            >
+              Yes, I'm sure
+            </button>
+            <button
+              type="button"
+              className="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+              onClick={close}
+            >
+              No, cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
