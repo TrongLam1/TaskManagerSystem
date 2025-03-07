@@ -61,7 +61,11 @@ export default function UserTable() {
       </div>
       {openUserModal && <UserModal setOpen={setOpenUserModal} />}
       {openConfirm && (
-        <ConfirmModal confirm={handleDeleteUser} close={closeModal} />
+        <ConfirmModal
+          type="remove"
+          confirm={handleDeleteUser}
+          close={closeModal}
+        />
       )}
     </>
   );
