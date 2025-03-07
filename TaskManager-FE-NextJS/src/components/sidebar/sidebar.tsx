@@ -45,7 +45,7 @@ const linkData = [
   },
   {
     label: "Trash",
-    link: "/trashed",
+    link: "/trash/1",
     icon: <FaTrashAlt />,
   },
 ];
