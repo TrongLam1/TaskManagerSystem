@@ -14,18 +14,18 @@ declare global {
   interface IBackendRes<T> {
     error?: string | string[];
     message: string;
-    statusCode: number | string;
+    status: number;
     data?: T;
   }
 
   interface ILogin {
     user: {
-      id: number;
+      userId: number;
       name: string;
+      title: string;
       email: string;
-      imageUrl: string;
     };
-    access_token: string;
-    refresh_token: string;
+    token: string;
+    refreshToken: string;
   }
 }

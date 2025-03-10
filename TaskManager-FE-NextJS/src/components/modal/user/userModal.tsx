@@ -37,7 +37,6 @@ export default function UserModal(props: unknown) {
                 <input
                   type="text"
                   name="name"
-                  id="name"
                   className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-base text-gray-900"
                   placeholder="Full name"
                   required={true}
@@ -53,7 +52,6 @@ export default function UserModal(props: unknown) {
                 <input
                   type="text"
                   name="title"
-                  id="title"
                   className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-base text-gray-900"
                   placeholder="Title"
                   required={true}
@@ -69,7 +67,6 @@ export default function UserModal(props: unknown) {
                 <input
                   type="text"
                   name="email"
-                  id="email"
                   className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-base text-gray-900"
                   placeholder="Email"
                   required={true}
@@ -85,7 +82,6 @@ export default function UserModal(props: unknown) {
                 <input
                   type="text"
                   name="role"
-                  id="role"
                   className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-base text-gray-900"
                   placeholder="Role"
                   required={true}

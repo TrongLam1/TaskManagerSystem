@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar/navbar";
-import Sidebar from "@/components/sidebar/sidebar";
+import { SessionProvider } from "next-auth/react";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const nunitoSans = Nunito_Sans({
   weight: "400",
@@ -23,15 +23,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunitoSans.className} antialiased`}>
-        <div className="flex h-full w-full bg-[#f3f4f6] text-black">
-          <div className="sticky top-0 hidden h-screen w-1/5 bg-white md:block">
-            <Sidebar />
-          </div>
-          <div className="main flex-1">
-            <Navbar />
-            <div className="p-4 2xl:px-10">{children}</div>
-          </div>
-        </div>
+        <SessionProvider>{children}</SessionProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
       </body>
     </html>
   );
