@@ -4,7 +4,11 @@ import { signIn } from "../../auth";
 
 export default async function authenticate(email: string, password: string) {
   try {
-    return await signIn("credentials", { email, password, redirect: false });
+    return await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
   } catch (err) {
     if ((err as any).name === "InvalidEmailPasswordError") {
       return {

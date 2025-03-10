@@ -24,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
         }
 
-        const res = await sendRequest<IBackendRes<any>>({
+        const res = await sendRequest<IBackendRes<ILogin>>({
           method: "POST",
           url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
           body: {
@@ -33,23 +33,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           },
         });
 
-        if (+res.statusCode === 201) {
+        if (+res.status === 200) {
           return {
             user: {
-              id: res.data.user.id,
-              email: res.data.user.email,
-              username: res.data.user.username,
-              phone: res.data.user.phone,
-              avatar: res.data.user.avatar,
+              id: res.data!.user.userId,
+              email: res.data!.user.email,
+              name: res.data!.user.name,
+              title: res.data!.user.title,
             },
-            token: res.data.access_token,
-            refresh_token: res.data.refresh_token,
+            token: res.data!.token,
+            refreshToken: res.data!.refreshToken,
           };
         }
 
-        if (+res.statusCode === 401) {
+        if (+res.status === 400) {
           throw new InvalidEmailPasswordError();
-        } else if (+res.statusCode === 404) {
+        } else if (+res.status === 404) {
           throw new NotFoundUserError();
         } else {
           throw new Error("Internal server error");
