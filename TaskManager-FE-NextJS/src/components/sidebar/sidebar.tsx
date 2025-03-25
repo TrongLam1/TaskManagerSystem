@@ -1,6 +1,8 @@
 "use client";
 
+import { hasAdmin } from "@/utils";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
@@ -51,10 +53,13 @@ const linkData = [
 ];
 
 export default function Sidebar() {
+  const { data: session } = useSession();
   const location = usePathname();
   const path = location.split("/")[1];
 
-  //   const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
+  const isAdmin = hasAdmin(session);
+
+  const sidebarLinks = isAdmin ? linkData : linkData.slice(0, 6);
 
   const closeSidebar = () => {};
 
@@ -86,7 +91,7 @@ export default function Sidebar() {
       </h1>
 
       <div className="flex flex-1 flex-col gap-y-5 py-8">
-        {linkData.map((link) => (
+        {sidebarLinks.map((link) => (
           <NavLink el={link} key={link.label} />
         ))}
       </div>

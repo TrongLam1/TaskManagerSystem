@@ -40,6 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               email: res.data!.user.email,
               name: res.data!.user.name,
               title: res.data!.user.title,
+              roles: res.data!.user.roles,
             },
             token: res.data!.token,
             refreshToken: res.data!.refreshToken,
@@ -47,7 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         if (+res.status === 400) {
-          throw new InvalidEmailPasswordError();
+          throw new InvalidEmailPasswordError(res.message);
         } else if (+res.status === 404) {
           throw new NotFoundUserError();
         } else {
@@ -57,17 +58,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/auth/login",
+    signIn: "/login",
   },
   callbacks: {
     jwt({ token, user, trigger, session }) {
-      if (trigger === "update" && session?.username) {
-        token.user.user.username = session.username;
-        return token;
-      }
-
-      if (trigger === "update" && session?.avatar) {
-        token.user.user.avatar = session.avatar;
+      if (trigger === "update" && session?.name) {
+        token.user.user.name = session.name;
+        token.user.user.title = session.title;
         return token;
       }
 

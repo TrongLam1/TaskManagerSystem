@@ -16,5 +16,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
 
     @Query("SELECT u FROM UserEntity u WHERE u.isActive = :isActive")
-    Page<UserEntity> findAllUser(@Param("isActive") boolean isActive, Pageable pageable);
+    Page<UserEntity> findAllUserByIsActive(@Param("isActive") boolean isActive, Pageable pageable);
 }

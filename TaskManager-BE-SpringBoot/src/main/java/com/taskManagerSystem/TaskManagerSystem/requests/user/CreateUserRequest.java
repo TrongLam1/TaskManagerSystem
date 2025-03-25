@@ -20,6 +20,10 @@ public class CreateUserRequest {
     @NotBlank(message = "Email is mandatory.")
     private String email;
 
+    private String title;
+
     @NotBlank(message = "Password is mandatory.")
     private String password;
+
+    private String[] roles;
 }

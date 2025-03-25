@@ -5,6 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.taskManagerSystem.TaskManagerSystem.dtos.UserDTO;
 import com.taskManagerSystem.TaskManagerSystem.entities.UserEntity;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.AppException;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.ErrorCode;
@@ -14,6 +15,7 @@ import com.taskManagerSystem.TaskManagerSystem.services.IAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,8 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final ModelMapper mapper;
+
     @NonFinal
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
@@ -43,12 +47,17 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         UserEntity user = userService.findUserByEmail(request.getEmail());
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
-            throw new AppException(ErrorCode.INVALID_PASSWORD);
+            throw new AppException(ErrorCode.INCORRECT_PASSWORD);
+
+        if (!user.isActive()) {
+            throw new AppException(ErrorCode.USER_NOT_AVAILABLE);
+        }
 
         String token = generateToken(user, 1);
         String refreshToken = generateToken(user, 7);
 
         return JwtAuthenticationResponse.builder()
+                .user(mapper.map(user, UserDTO.class))
                 .token(token)
                 .refreshToken(refreshToken)
                 .build();
