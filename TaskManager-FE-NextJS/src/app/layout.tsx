@@ -23,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunitoSans.className} antialiased`}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider refetchOnWindowFocus={false}>
+          {children}
+        </SessionProvider>
         <ToastContainer
           position="top-right"
           autoClose={3000}

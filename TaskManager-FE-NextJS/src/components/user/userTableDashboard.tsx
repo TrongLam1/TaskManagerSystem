@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import { getInitials } from "@/utils";
 import moment from "moment";
 
 export default function UserTableDashboard(props: unknown) {
@@ -10,7 +10,6 @@ export default function UserTableDashboard(props: unknown) {
     <thead className="border-b border-gray-300">
       <tr className="text-left text-black">
         <th className="py-2">Full Name</th>
-        <th className="py-2">Status</th>
         <th className="py-2">Created At</th>
       </tr>
     </thead>
@@ -23,23 +22,11 @@ export default function UserTableDashboard(props: unknown) {
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-700 text-sm text-white">
             <span className="text-center">{getInitials(user?.name)}</span>
           </div>
-
           <div>
             <p> {user.name}</p>
-            <span className="text-xs text-black">{user?.role}</span>
+            <span className="text-xs text-black">{user?.roles[0]?.name}</span>
           </div>
         </div>
-      </td>
-
-      <td>
-        <p
-          className={clsx(
-            "w-fit rounded-full px-3 py-1 text-sm",
-            user?.isActive ? "bg-blue-200" : "bg-yellow-100",
-          )}
-        >
-          {user?.isActive ? "Active" : "Disabled"}
-        </p>
       </td>
       <td className="py-2 text-sm">{moment(user?.createdAt).fromNow()}</td>
     </tr>
@@ -50,8 +37,8 @@ export default function UserTableDashboard(props: unknown) {
       <table className="mb-5 w-full">
         <TableHeader />
         <tbody>
-          {users?.map((user, index) => (
-            <TableRow key={index + user?._id} user={user} />
+          {users?.map((user: IUser, index: number) => (
+            <TableRow key={`user-${index}`} user={user} />
           ))}
         </tbody>
       </table>

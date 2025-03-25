@@ -1,8 +1,8 @@
 "use client";
 
 import { MdOutlineSearch } from "react-icons/md";
-import Profile from "../profile/profile";
 import NotificationPanel from "../notification/notificationPanel";
+import Profile from "../profile/profile";
 
 export default function Navbar() {
   return (

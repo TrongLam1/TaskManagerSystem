@@ -19,13 +19,18 @@ declare global {
   }
 
   interface ILogin {
-    user: {
-      userId: number;
-      name: string;
-      title: string;
-      email: string;
-    };
+    user: IUser;
     token: string;
     refreshToken: string;
+  }
+
+  interface IUser {
+    userId: number;
+    createdAt: Date;
+    name: string;
+    title: string;
+    email: string;
+    roles: string[];
+    active: boolean;
   }
 }
