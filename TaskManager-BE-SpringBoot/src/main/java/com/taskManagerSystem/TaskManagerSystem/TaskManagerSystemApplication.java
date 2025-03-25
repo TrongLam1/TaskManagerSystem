@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableJpaAuditing
 public class TaskManagerSystemApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(TaskManagerSystemApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(TaskManagerSystemApplication.class, args);
+    }
 }
