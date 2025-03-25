@@ -5,6 +5,7 @@ import com.taskManagerSystem.TaskManagerSystem.entities.UserEntity;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.AppException;
 import com.taskManagerSystem.TaskManagerSystem.exceptions.ErrorCode;
 import com.taskManagerSystem.TaskManagerSystem.repositories.UserRepository;
+import com.taskManagerSystem.TaskManagerSystem.requests.user.ChangePasswordRequest;
 import com.taskManagerSystem.TaskManagerSystem.requests.user.CreateUserRequest;
 import com.taskManagerSystem.TaskManagerSystem.requests.user.UpdateUserRequest;
 import com.taskManagerSystem.TaskManagerSystem.responses.PaginationResult;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -31,6 +33,8 @@ import java.util.Set;
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
+
+    private final EmailServiceImpl emailService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -101,7 +105,9 @@ public class UserServiceImpl implements IUserService {
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 
-        Page<UserEntity> users = userRepository.findAllUser(isActive, pageable);
+        Page<UserEntity> users = isActive ?
+                userRepository.findAllUserByIsActive(isActive, pageable)
+                : userRepository.findAll(pageable);
 
         List<UserDTO> usersDTO = users.getContent().stream()
                 .map(user -> mapper.map(user, UserDTO.class))
@@ -112,6 +118,49 @@ public class UserServiceImpl implements IUserService {
         result.setTotalPages(users.getTotalPages());
 
         return result;
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTED);
+        }
+
+        UserEntity user = findUserByEmail(authentication.getName());
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword()))
+            throw new AppException(ErrorCode.INCORRECT_PASSWORD);
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void restoreUsers(Set<String> emails) {
+        for (String email : emails) {
+            UserEntity user = findUserByEmail(email);
+            user.setActive(true);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void resetPassword(String email) {
+        UserEntity user = findUserByEmail(email);
+
+        if (!user.isActive()) {
+            throw new AppException(ErrorCode.USER_NOT_AVAILABLE);
+        }
+
+        Random rnd = new Random();
+        int number = rnd.nextInt(99999999);
+        user.setPassword(passwordEncoder.encode(String.format("%08d", number)));
+        userRepository.save(user);
+
+        String text = "New password: " + number;
+        emailService.sendSimpleMessage(email, "Reset Password", text);
     }
 
     @Override

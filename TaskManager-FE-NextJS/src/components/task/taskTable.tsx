@@ -8,6 +8,8 @@ import TaskBoardView from "./board/taskBoardView";
 import TaskListView from "./list/taskListView";
 import TaskModal from "../modal/task/taskModal";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { hasAdmin } from "@/utils";
 
 const tabs = [
   {
@@ -33,7 +35,9 @@ const titles = new Map([
 
 export default function TaskTable(props: unknown) {
   const pathname = usePathname();
-  const [openModalTask, setOpenModalTask] = useState(false);
+  const { data: session } = useSession();
+
+  const [openModalTask, setOpenModalTask] = useState<boolean>(false);
   const [selectedView, setSelectedView] = useState(0);
 
   const arrayPath = pathname.split("/");
@@ -49,7 +53,7 @@ export default function TaskTable(props: unknown) {
           <h2 className="text-2xl font-semibold capitalize">
             {titles.get(arrayPath[1])}
           </h2>
-          {arrayPath.includes("task") && (
+          {arrayPath.includes("task") && hasAdmin(session) && (
             <button
               type="button"
               className="flex items-center gap-1 rounded-md bg-blue-600 px-3 py-2 text-white outline-none 2xl:py-2.5"

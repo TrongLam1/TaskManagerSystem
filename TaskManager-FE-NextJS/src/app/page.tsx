@@ -5,8 +5,6 @@ import {
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
 
-const auth = true;
-
 export default function Home() {
   const ICONS = {
     high: <MdKeyboardDoubleArrowUp />,
@@ -14,7 +12,7 @@ export default function Home() {
     low: <MdKeyboardArrowDown />,
   };
 
-  if (auth) redirect("/dashboard");
+  redirect("/dashboard");
 
   return <></>;
 }

@@ -1,10 +1,15 @@
 import Card from "@/components/card/card";
 import Chart from "@/components/chart/chart";
 import TaskTableDashboard from "@/components/task/taskTableDashboard";
+import UserTableDashboard from "@/components/user/userTableDashboard";
 import { FaNewspaper } from "react-icons/fa";
 import { FaArrowsToDot } from "react-icons/fa6";
 import { LuClipboardList } from "react-icons/lu";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { auth } from "../../../../auth";
+import { GetAllUsers } from "@/app/api/userApi";
+import { useEffect } from "react";
+import { revalidateUser } from "@/utils/revalidate";
 
 export const metadata = {
   title: "Dashboard",
@@ -41,7 +46,11 @@ const stats = [
   },
 ];
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const session = await auth();
+  const res = await GetAllUsers(session?.user.token, 1, true);
+  const users = res.status === 200 ? res.data!.data : null;
+
   return (
     <div className="h-full py-4">
       <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
@@ -57,6 +66,7 @@ export default function Dashboard() {
       </div>
       <div className="flex w-full flex-col gap-4 py-8 md:flex-row 2xl:gap-10">
         <TaskTableDashboard />
+        <UserTableDashboard users={users} />
       </div>
     </div>
   );

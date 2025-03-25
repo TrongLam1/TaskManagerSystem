@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 
-export default function Card(props: unknown) {
+export default function Card(props: { stat: any }) {
   const { stat } = props;
 
   return (
